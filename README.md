@@ -1,4 +1,4 @@
-Goonbee Chat Thrift
+Goonbee Thrift Chat
 ============
 
 Thrift service for Goonbee Chat Service
