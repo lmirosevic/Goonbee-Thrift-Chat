@@ -4,7 +4,7 @@
 // DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
 //
 var Thrift = require('thrift').Thrift;
-var GoonbeeSharedThriftService_ttypes = require('./GoonbeeSharedThriftService_types')
+var GoonbeeShared_ttypes = require('./GoonbeeShared_types')
 
 
 var ttypes = module.exports = {};
@@ -16,100 +16,6 @@ ttypes.ChatSorting = {
 'MESSAGE_COUNT' : 1,
 'DATE_CREATED' : 2
 };
-ttypes.ResponseStatus = {
-'SUCCESS' : 0,
-'GENERIC' : 1,
-'MALFORMED_REQUEST' : 2,
-'AUTHENTICATION' : 3,
-'AUTHORIZATION' : 4,
-'PHASED_OUT' : 5
-};
-ttypes.RangeDirection = {
-'FORWARDS' : 0,
-'BACKWARDS' : 1
-};
-GBChatService.Range = module.exports.Range = function(args) {
-  this.direction = null;
-  this.index = null;
-  this.length = null;
-  if (args) {
-    if (args.direction !== undefined) {
-      this.direction = args.direction;
-    }
-    if (args.index !== undefined) {
-      this.index = args.index;
-    }
-    if (args.length !== undefined) {
-      this.length = args.length;
-    }
-  }
-};
-GBChatService.Range.prototype = {};
-GBChatService.Range.prototype.read = function(input) {
-  input.readStructBegin();
-  while (true)
-  {
-    var ret = input.readFieldBegin();
-    var fname = ret.fname;
-    var ftype = ret.ftype;
-    var fid = ret.fid;
-    if (ftype == Thrift.Type.STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-      if (ftype == Thrift.Type.I32) {
-        this.direction = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 2:
-      if (ftype == Thrift.Type.I32) {
-        this.index = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 3:
-      if (ftype == Thrift.Type.I32) {
-        this.length = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      default:
-        input.skip(ftype);
-    }
-    input.readFieldEnd();
-  }
-  input.readStructEnd();
-  return;
-};
-
-GBChatService.Range.prototype.write = function(output) {
-  output.writeStructBegin('Range');
-  if (this.direction !== null && this.direction !== undefined) {
-    output.writeFieldBegin('direction', Thrift.Type.I32, 1);
-    output.writeI32(this.direction);
-    output.writeFieldEnd();
-  }
-  if (this.index !== null && this.index !== undefined) {
-    output.writeFieldBegin('index', Thrift.Type.I32, 2);
-    output.writeI32(this.index);
-    output.writeFieldEnd();
-  }
-  if (this.length !== null && this.length !== undefined) {
-    output.writeFieldBegin('length', Thrift.Type.I32, 3);
-    output.writeI32(this.length);
-    output.writeFieldEnd();
-  }
-  output.writeFieldStop();
-  output.writeStructEnd();
-  return;
-};
-
 GBChatService.ChatStats = module.exports.ChatStats = function(args) {
   this.messageCount = null;
   this.participantCount = null;
@@ -515,75 +421,6 @@ GBChatService.Message.prototype.write = function(output) {
   if (this.content !== null && this.content !== undefined) {
     output.writeFieldBegin('content', Thrift.Type.STRING, 4);
     output.writeString(this.content);
-    output.writeFieldEnd();
-  }
-  output.writeFieldStop();
-  output.writeStructEnd();
-  return;
-};
-
-GBChatService.RequestError = module.exports.RequestError = function(args) {
-  Thrift.TException.call(this, "GBChatService.RequestError")
-  this.name = "GBChatService.RequestError"
-  this.status = null;
-  this.message = null;
-  if (args) {
-    if (args.status !== undefined) {
-      this.status = args.status;
-    }
-    if (args.message !== undefined) {
-      this.message = args.message;
-    }
-  }
-};
-Thrift.inherits(GBChatService.RequestError, Thrift.TException);
-GBChatService.RequestError.prototype.name = 'RequestError';
-GBChatService.RequestError.prototype.read = function(input) {
-  input.readStructBegin();
-  while (true)
-  {
-    var ret = input.readFieldBegin();
-    var fname = ret.fname;
-    var ftype = ret.ftype;
-    var fid = ret.fid;
-    if (ftype == Thrift.Type.STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-      if (ftype == Thrift.Type.I32) {
-        this.status = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 2:
-      if (ftype == Thrift.Type.STRING) {
-        this.message = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      default:
-        input.skip(ftype);
-    }
-    input.readFieldEnd();
-  }
-  input.readStructEnd();
-  return;
-};
-
-GBChatService.RequestError.prototype.write = function(output) {
-  output.writeStructBegin('RequestError');
-  if (this.status !== null && this.status !== undefined) {
-    output.writeFieldBegin('status', Thrift.Type.I32, 1);
-    output.writeI32(this.status);
-    output.writeFieldEnd();
-  }
-  if (this.message !== null && this.message !== undefined) {
-    output.writeFieldBegin('message', Thrift.Type.STRING, 2);
-    output.writeString(this.message);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

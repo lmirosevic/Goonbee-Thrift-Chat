@@ -15,71 +15,13 @@
 #import "TObjective-C.h"
 #import "TBase.h"
 
-#import "GoonbeeSharedThriftService.h"
+#import "GoonbeeShared.h"
 
 enum GBChatChatSorting {
   ChatSorting_PARTICIPANT_COUNT = 0,
   ChatSorting_MESSAGE_COUNT = 1,
   ChatSorting_DATE_CREATED = 2
 };
-
-enum GBChatResponseStatus {
-  ResponseStatus_SUCCESS = 0,
-  ResponseStatus_GENERIC = 1,
-  ResponseStatus_MALFORMED_REQUEST = 2,
-  ResponseStatus_AUTHENTICATION = 3,
-  ResponseStatus_AUTHORIZATION = 4,
-  ResponseStatus_PHASED_OUT = 5
-};
-
-enum GBChatRangeDirection {
-  RangeDirection_FORWARDS = 0,
-  RangeDirection_BACKWARDS = 1
-};
-
-@interface GBChatRange : NSObject <TBase, NSCoding> {
-  int __direction;
-  int32_t __index;
-  int32_t __length;
-
-  BOOL __direction_isset;
-  BOOL __index_isset;
-  BOOL __length_isset;
-}
-
-#if TARGET_OS_IPHONE || (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5)
-@property (nonatomic, getter=direction, setter=setDirection:) int direction;
-@property (nonatomic, getter=index, setter=setIndex:) int32_t index;
-@property (nonatomic, getter=length, setter=setLength:) int32_t length;
-#endif
-
-- (id) init;
-- (id) initWithDirection: (int) direction index: (int32_t) index length: (int32_t) length;
-
-- (void) read: (id <TProtocol>) inProtocol;
-- (void) write: (id <TProtocol>) outProtocol;
-
-- (void) validate;
-
-#if !__has_feature(objc_arc)
-- (int) direction;
-- (void) setDirection: (int) direction;
-#endif
-- (BOOL) directionIsSet;
-
-#if !__has_feature(objc_arc)
-- (int32_t) index;
-- (void) setIndex: (int32_t) index;
-#endif
-- (BOOL) indexIsSet;
-
-#if !__has_feature(objc_arc)
-- (int32_t) length;
-- (void) setLength: (int32_t) length;
-#endif
-- (BOOL) lengthIsSet;
-
-@end
 
 @interface GBChatChatStats : NSObject <TBase, NSCoding> {
   int32_t __messageCount;
@@ -301,51 +243,16 @@ enum GBChatRangeDirection {
 
 @end
 
-@interface GBChatRequestError : NSException <TBase, NSCoding> {
-  int __status;
-  NSString * __message;
-
-  BOOL __status_isset;
-  BOOL __message_isset;
-}
-
-#if TARGET_OS_IPHONE || (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5)
-@property (nonatomic, getter=status, setter=setStatus:) int status;
-@property (nonatomic, retain, getter=message, setter=setMessage:) NSString * message;
-#endif
-
-- (id) init;
-- (id) initWithStatus: (int) status message: (NSString *) message;
-
-- (void) read: (id <TProtocol>) inProtocol;
-- (void) write: (id <TProtocol>) outProtocol;
-
-- (void) validate;
-
-#if !__has_feature(objc_arc)
-- (int) status;
-- (void) setStatus: (int) status;
-#endif
-- (BOOL) statusIsSet;
-
-#if !__has_feature(objc_arc)
-- (NSString *) message;
-- (void) setMessage: (NSString *) message;
-#endif
-- (BOOL) messageIsSet;
-
-@end
-
 @protocol GBChatGoonbeeChatService <NSObject>
-- (BOOL) isUsernameAvailable: (NSString *) username;  // throws GBChatRequestError *, TException
-- (NSString *) registerUsername: (NSString *) userId username: (NSString *) username;  // throws GBChatRequestError *, TException
-- (GBChatChat *) newChat: (NSString *) userId chatId: (NSString *) chatId chatOptions: (GBChatChatOptions *) chatOptions;  // throws GBChatRequestError *, TException
-- (NSMutableArray *) chats: (int) sorting range: (GBChatRange *) range;  // throws GBChatRequestError *, TException
-- (GBChatChat *) chat: (NSString *) userId chatId: (NSString *) chatId;  // throws GBChatRequestError *, TException
-- (void) newMessage: (NSString *) userId chatId: (NSString *) chatId content: (NSString *) content;  // throws GBChatRequestError *, TException
-- (NSMutableArray *) messages: (NSString *) userId chatId: (NSString *) chatId range: (GBChatRange *) range;  // throws GBChatRequestError *, TException
-- (GBChatChat *) setChatOptions: (NSString *) userId chatId: (NSString *) chatId chatOptions: (GBChatChatOptions *) chatOptions;  // throws GBChatRequestError *, TException
-- (int32_t) globalUserCount;  // throws GBChatRequestError *, TException
+- (BOOL) isUsernameAvailable: (NSString *) username;  // throws GBSharedRequestError *, TException
+- (NSString *) registerUsername: (NSString *) userId username: (NSString *) username;  // throws GBSharedRequestError *, TException
+- (GBChatChat *) newChat: (NSString *) userId chatId: (NSString *) chatId chatOptions: (GBChatChatOptions *) chatOptions;  // throws GBSharedRequestError *, TException
+- (NSMutableArray *) chats: (int) sorting range: (GBSharedRange *) range;  // throws GBSharedRequestError *, TException
+- (GBChatChat *) chat: (NSString *) userId chatId: (NSString *) chatId;  // throws GBSharedRequestError *, TException
+- (void) newMessage: (NSString *) userId chatId: (NSString *) chatId content: (NSString *) content;  // throws GBSharedRequestError *, TException
+- (NSMutableArray *) messages: (NSString *) userId chatId: (NSString *) chatId range: (GBSharedRange *) range;  // throws GBSharedRequestError *, TException
+- (GBChatChat *) setChatOptions: (NSString *) userId chatId: (NSString *) chatId chatOptions: (GBChatChatOptions *) chatOptions;  // throws GBSharedRequestError *, TException
+- (int32_t) globalUserCount;  // throws GBSharedRequestError *, TException
 @end
 
 @interface GBChatGoonbeeChatServiceClient : NSObject <GBChatGoonbeeChatService> {

@@ -15,211 +15,9 @@
 #import "TObjective-C.h"
 #import "TBase.h"
 
-#import "GoonbeeSharedThriftService.h"
+#import "GoonbeeShared.h"
 
 #import "GoonbeeChatService.h"
-
-@implementation GBChatRange
-
-- (id) init
-{
-  self = [super init];
-#if TARGET_OS_IPHONE || (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5)
-#endif
-  return self;
-}
-
-- (id) initWithDirection: (int) direction index: (int32_t) index length: (int32_t) length
-{
-  self = [super init];
-  __direction = direction;
-  __direction_isset = YES;
-  __index = index;
-  __index_isset = YES;
-  __length = length;
-  __length_isset = YES;
-  return self;
-}
-
-- (id) initWithCoder: (NSCoder *) decoder
-{
-  self = [super init];
-  if ([decoder containsValueForKey: @"direction"])
-  {
-    __direction = [decoder decodeIntForKey: @"direction"];
-    __direction_isset = YES;
-  }
-  if ([decoder containsValueForKey: @"index"])
-  {
-    __index = [decoder decodeInt32ForKey: @"index"];
-    __index_isset = YES;
-  }
-  if ([decoder containsValueForKey: @"length"])
-  {
-    __length = [decoder decodeInt32ForKey: @"length"];
-    __length_isset = YES;
-  }
-  return self;
-}
-
-- (void) encodeWithCoder: (NSCoder *) encoder
-{
-  if (__direction_isset)
-  {
-    [encoder encodeInt: __direction forKey: @"direction"];
-  }
-  if (__index_isset)
-  {
-    [encoder encodeInt32: __index forKey: @"index"];
-  }
-  if (__length_isset)
-  {
-    [encoder encodeInt32: __length forKey: @"length"];
-  }
-}
-
-- (void) dealloc
-{
-  [super dealloc_stub];
-}
-
-- (int) direction {
-  return __direction;
-}
-
-- (void) setDirection: (int) direction {
-  __direction = direction;
-  __direction_isset = YES;
-}
-
-- (BOOL) directionIsSet {
-  return __direction_isset;
-}
-
-- (void) unsetDirection {
-  __direction_isset = NO;
-}
-
-- (int32_t) index {
-  return __index;
-}
-
-- (void) setIndex: (int32_t) index {
-  __index = index;
-  __index_isset = YES;
-}
-
-- (BOOL) indexIsSet {
-  return __index_isset;
-}
-
-- (void) unsetIndex {
-  __index_isset = NO;
-}
-
-- (int32_t) length {
-  return __length;
-}
-
-- (void) setLength: (int32_t) length {
-  __length = length;
-  __length_isset = YES;
-}
-
-- (BOOL) lengthIsSet {
-  return __length_isset;
-}
-
-- (void) unsetLength {
-  __length_isset = NO;
-}
-
-- (void) read: (id <TProtocol>) inProtocol
-{
-  NSString * fieldName;
-  int fieldType;
-  int fieldID;
-
-  [inProtocol readStructBeginReturningName: NULL];
-  while (true)
-  {
-    [inProtocol readFieldBeginReturningName: &fieldName type: &fieldType fieldID: &fieldID];
-    if (fieldType == TType_STOP) { 
-      break;
-    }
-    switch (fieldID)
-    {
-      case 1:
-        if (fieldType == TType_I32) {
-          int fieldValue = [inProtocol readI32];
-          [self setDirection: fieldValue];
-        } else { 
-          [TProtocolUtil skipType: fieldType onProtocol: inProtocol];
-        }
-        break;
-      case 2:
-        if (fieldType == TType_I32) {
-          int32_t fieldValue = [inProtocol readI32];
-          [self setIndex: fieldValue];
-        } else { 
-          [TProtocolUtil skipType: fieldType onProtocol: inProtocol];
-        }
-        break;
-      case 3:
-        if (fieldType == TType_I32) {
-          int32_t fieldValue = [inProtocol readI32];
-          [self setLength: fieldValue];
-        } else { 
-          [TProtocolUtil skipType: fieldType onProtocol: inProtocol];
-        }
-        break;
-      default:
-        [TProtocolUtil skipType: fieldType onProtocol: inProtocol];
-        break;
-    }
-    [inProtocol readFieldEnd];
-  }
-  [inProtocol readStructEnd];
-}
-
-- (void) write: (id <TProtocol>) outProtocol {
-  [outProtocol writeStructBeginWithName: @"Range"];
-  if (__direction_isset) {
-    [outProtocol writeFieldBeginWithName: @"direction" type: TType_I32 fieldID: 1];
-    [outProtocol writeI32: __direction];
-    [outProtocol writeFieldEnd];
-  }
-  if (__index_isset) {
-    [outProtocol writeFieldBeginWithName: @"index" type: TType_I32 fieldID: 2];
-    [outProtocol writeI32: __index];
-    [outProtocol writeFieldEnd];
-  }
-  if (__length_isset) {
-    [outProtocol writeFieldBeginWithName: @"length" type: TType_I32 fieldID: 3];
-    [outProtocol writeI32: __length];
-    [outProtocol writeFieldEnd];
-  }
-  [outProtocol writeFieldStop];
-  [outProtocol writeStructEnd];
-}
-
-- (void) validate {
-  // check for required fields
-}
-
-- (NSString *) description {
-  NSMutableString * ms = [NSMutableString stringWithString: @"Range("];
-  [ms appendString: @"direction:"];
-  [ms appendFormat: @"%i", __direction];
-  [ms appendString: @",index:"];
-  [ms appendFormat: @"%i", __index];
-  [ms appendString: @",length:"];
-  [ms appendFormat: @"%i", __length];
-  [ms appendString: @")"];
-  return [NSString stringWithString: ms];
-}
-
-@end
 
 @implementation GBChatChatStats
 
@@ -1319,170 +1117,6 @@
 
 @end
 
-@implementation GBChatRequestError
-
-- (id) init
-{
-  return [super initWithName: @"RequestError" reason: @"unknown" userInfo: nil];
-}
-
-- (id) initWithStatus: (int) status message: (NSString *) message
-{
-  self = [self init];
-  __status = status;
-  __status_isset = YES;
-  __message = [message retain_stub];
-  __message_isset = YES;
-  return self;
-}
-
-- (id) initWithCoder: (NSCoder *) decoder
-{
-  self = [super initWithCoder: decoder];
-  if ([decoder containsValueForKey: @"status"])
-  {
-    __status = [decoder decodeIntForKey: @"status"];
-    __status_isset = YES;
-  }
-  if ([decoder containsValueForKey: @"message"])
-  {
-    __message = [[decoder decodeObjectForKey: @"message"] retain_stub];
-    __message_isset = YES;
-  }
-  return self;
-}
-
-- (void) encodeWithCoder: (NSCoder *) encoder
-{
-  [super encodeWithCoder: encoder];
-  if (__status_isset)
-  {
-    [encoder encodeInt: __status forKey: @"status"];
-  }
-  if (__message_isset)
-  {
-    [encoder encodeObject: __message forKey: @"message"];
-  }
-}
-
-- (void) dealloc
-{
-  [__message release_stub];
-  [super dealloc_stub];
-}
-
-- (int) status {
-  return __status;
-}
-
-- (void) setStatus: (int) status {
-  __status = status;
-  __status_isset = YES;
-}
-
-- (BOOL) statusIsSet {
-  return __status_isset;
-}
-
-- (void) unsetStatus {
-  __status_isset = NO;
-}
-
-- (NSString *) message {
-  return [[__message retain_stub] autorelease_stub];
-}
-
-- (void) setMessage: (NSString *) message {
-  [message retain_stub];
-  [__message release_stub];
-  __message = message;
-  __message_isset = YES;
-}
-
-- (BOOL) messageIsSet {
-  return __message_isset;
-}
-
-- (void) unsetMessage {
-  [__message release_stub];
-  __message = nil;
-  __message_isset = NO;
-}
-
-- (void) read: (id <TProtocol>) inProtocol
-{
-  NSString * fieldName;
-  int fieldType;
-  int fieldID;
-
-  [inProtocol readStructBeginReturningName: NULL];
-  while (true)
-  {
-    [inProtocol readFieldBeginReturningName: &fieldName type: &fieldType fieldID: &fieldID];
-    if (fieldType == TType_STOP) { 
-      break;
-    }
-    switch (fieldID)
-    {
-      case 1:
-        if (fieldType == TType_I32) {
-          int fieldValue = [inProtocol readI32];
-          [self setStatus: fieldValue];
-        } else { 
-          [TProtocolUtil skipType: fieldType onProtocol: inProtocol];
-        }
-        break;
-      case 2:
-        if (fieldType == TType_STRING) {
-          NSString * fieldValue = [inProtocol readString];
-          [self setMessage: fieldValue];
-        } else { 
-          [TProtocolUtil skipType: fieldType onProtocol: inProtocol];
-        }
-        break;
-      default:
-        [TProtocolUtil skipType: fieldType onProtocol: inProtocol];
-        break;
-    }
-    [inProtocol readFieldEnd];
-  }
-  [inProtocol readStructEnd];
-}
-
-- (void) write: (id <TProtocol>) outProtocol {
-  [outProtocol writeStructBeginWithName: @"RequestError"];
-  if (__status_isset) {
-    [outProtocol writeFieldBeginWithName: @"status" type: TType_I32 fieldID: 1];
-    [outProtocol writeI32: __status];
-    [outProtocol writeFieldEnd];
-  }
-  if (__message_isset) {
-    if (__message != nil) {
-      [outProtocol writeFieldBeginWithName: @"message" type: TType_STRING fieldID: 2];
-      [outProtocol writeString: __message];
-      [outProtocol writeFieldEnd];
-    }
-  }
-  [outProtocol writeFieldStop];
-  [outProtocol writeStructEnd];
-}
-
-- (void) validate {
-  // check for required fields
-}
-
-- (NSString *) description {
-  NSMutableString * ms = [NSMutableString stringWithString: @"RequestError("];
-  [ms appendString: @"status:"];
-  [ms appendFormat: @"%i", __status];
-  [ms appendString: @",message:"];
-  [ms appendFormat: @"\"%@\"", __message];
-  [ms appendString: @")"];
-  return [NSString stringWithString: ms];
-}
-
-@end
-
 
 @implementation GBChatGoonbeeChatServiceConstants
 + (void) initialize {
@@ -1640,7 +1274,7 @@
 
 @interface GBChatIsUsernameAvailable_result : NSObject <TBase, NSCoding> {
   BOOL __success;
-  GBChatRequestError * __error;
+  GBSharedRequestError * __error;
 
   BOOL __success_isset;
   BOOL __error_isset;
@@ -1648,11 +1282,11 @@
 
 #if TARGET_OS_IPHONE || (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5)
 @property (nonatomic, getter=success, setter=setSuccess:) BOOL success;
-@property (nonatomic, retain, getter=error, setter=setError:) GBChatRequestError * error;
+@property (nonatomic, retain, getter=error, setter=setError:) GBSharedRequestError * error;
 #endif
 
 - (id) init;
-- (id) initWithSuccess: (BOOL) success error: (GBChatRequestError *) error;
+- (id) initWithSuccess: (BOOL) success error: (GBSharedRequestError *) error;
 
 - (void) read: (id <TProtocol>) inProtocol;
 - (void) write: (id <TProtocol>) outProtocol;
@@ -1666,8 +1300,8 @@
 - (BOOL) successIsSet;
 
 #if !__has_feature(objc_arc)
-- (GBChatRequestError *) error;
-- (void) setError: (GBChatRequestError *) error;
+- (GBSharedRequestError *) error;
+- (void) setError: (GBSharedRequestError *) error;
 #endif
 - (BOOL) errorIsSet;
 
@@ -1683,7 +1317,7 @@
   return self;
 }
 
-- (id) initWithSuccess: (BOOL) success error: (GBChatRequestError *) error
+- (id) initWithSuccess: (BOOL) success error: (GBSharedRequestError *) error
 {
   self = [super init];
   __success = success;
@@ -1744,11 +1378,11 @@
   __success_isset = NO;
 }
 
-- (GBChatRequestError *) error {
+- (GBSharedRequestError *) error {
   return [[__error retain_stub] autorelease_stub];
 }
 
-- (void) setError: (GBChatRequestError *) error {
+- (void) setError: (GBSharedRequestError *) error {
   [error retain_stub];
   [__error release_stub];
   __error = error;
@@ -1790,7 +1424,7 @@
         break;
       case 1:
         if (fieldType == TType_STRUCT) {
-          GBChatRequestError *fieldValue = [[GBChatRequestError alloc] init];
+          GBSharedRequestError *fieldValue = [[GBSharedRequestError alloc] init];
           [fieldValue read: inProtocol];
           [self setError: fieldValue];
           [fieldValue release_stub];
@@ -2051,7 +1685,7 @@
 
 @interface GBChatRegisterUsername_result : NSObject <TBase, NSCoding> {
   NSString * __success;
-  GBChatRequestError * __error;
+  GBSharedRequestError * __error;
 
   BOOL __success_isset;
   BOOL __error_isset;
@@ -2059,11 +1693,11 @@
 
 #if TARGET_OS_IPHONE || (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5)
 @property (nonatomic, retain, getter=success, setter=setSuccess:) NSString * success;
-@property (nonatomic, retain, getter=error, setter=setError:) GBChatRequestError * error;
+@property (nonatomic, retain, getter=error, setter=setError:) GBSharedRequestError * error;
 #endif
 
 - (id) init;
-- (id) initWithSuccess: (NSString *) success error: (GBChatRequestError *) error;
+- (id) initWithSuccess: (NSString *) success error: (GBSharedRequestError *) error;
 
 - (void) read: (id <TProtocol>) inProtocol;
 - (void) write: (id <TProtocol>) outProtocol;
@@ -2077,8 +1711,8 @@
 - (BOOL) successIsSet;
 
 #if !__has_feature(objc_arc)
-- (GBChatRequestError *) error;
-- (void) setError: (GBChatRequestError *) error;
+- (GBSharedRequestError *) error;
+- (void) setError: (GBSharedRequestError *) error;
 #endif
 - (BOOL) errorIsSet;
 
@@ -2094,7 +1728,7 @@
   return self;
 }
 
-- (id) initWithSuccess: (NSString *) success error: (GBChatRequestError *) error
+- (id) initWithSuccess: (NSString *) success error: (GBSharedRequestError *) error
 {
   self = [super init];
   __success = [success retain_stub];
@@ -2160,11 +1794,11 @@
   __success_isset = NO;
 }
 
-- (GBChatRequestError *) error {
+- (GBSharedRequestError *) error {
   return [[__error retain_stub] autorelease_stub];
 }
 
-- (void) setError: (GBChatRequestError *) error {
+- (void) setError: (GBSharedRequestError *) error {
   [error retain_stub];
   [__error release_stub];
   __error = error;
@@ -2206,7 +1840,7 @@
         break;
       case 1:
         if (fieldType == TType_STRUCT) {
-          GBChatRequestError *fieldValue = [[GBChatRequestError alloc] init];
+          GBSharedRequestError *fieldValue = [[GBSharedRequestError alloc] init];
           [fieldValue read: inProtocol];
           [self setError: fieldValue];
           [fieldValue release_stub];
@@ -2530,7 +2164,7 @@
 
 @interface GBChatNewChat_result : NSObject <TBase, NSCoding> {
   GBChatChat * __success;
-  GBChatRequestError * __error;
+  GBSharedRequestError * __error;
 
   BOOL __success_isset;
   BOOL __error_isset;
@@ -2538,11 +2172,11 @@
 
 #if TARGET_OS_IPHONE || (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5)
 @property (nonatomic, retain, getter=success, setter=setSuccess:) GBChatChat * success;
-@property (nonatomic, retain, getter=error, setter=setError:) GBChatRequestError * error;
+@property (nonatomic, retain, getter=error, setter=setError:) GBSharedRequestError * error;
 #endif
 
 - (id) init;
-- (id) initWithSuccess: (GBChatChat *) success error: (GBChatRequestError *) error;
+- (id) initWithSuccess: (GBChatChat *) success error: (GBSharedRequestError *) error;
 
 - (void) read: (id <TProtocol>) inProtocol;
 - (void) write: (id <TProtocol>) outProtocol;
@@ -2556,8 +2190,8 @@
 - (BOOL) successIsSet;
 
 #if !__has_feature(objc_arc)
-- (GBChatRequestError *) error;
-- (void) setError: (GBChatRequestError *) error;
+- (GBSharedRequestError *) error;
+- (void) setError: (GBSharedRequestError *) error;
 #endif
 - (BOOL) errorIsSet;
 
@@ -2573,7 +2207,7 @@
   return self;
 }
 
-- (id) initWithSuccess: (GBChatChat *) success error: (GBChatRequestError *) error
+- (id) initWithSuccess: (GBChatChat *) success error: (GBSharedRequestError *) error
 {
   self = [super init];
   __success = [success retain_stub];
@@ -2639,11 +2273,11 @@
   __success_isset = NO;
 }
 
-- (GBChatRequestError *) error {
+- (GBSharedRequestError *) error {
   return [[__error retain_stub] autorelease_stub];
 }
 
-- (void) setError: (GBChatRequestError *) error {
+- (void) setError: (GBSharedRequestError *) error {
   [error retain_stub];
   [__error release_stub];
   __error = error;
@@ -2687,7 +2321,7 @@
         break;
       case 1:
         if (fieldType == TType_STRUCT) {
-          GBChatRequestError *fieldValue = [[GBChatRequestError alloc] init];
+          GBSharedRequestError *fieldValue = [[GBSharedRequestError alloc] init];
           [fieldValue read: inProtocol];
           [self setError: fieldValue];
           [fieldValue release_stub];
@@ -2742,7 +2376,7 @@
 
 @interface GBChatchats_args : NSObject <TBase, NSCoding> {
   int __sorting;
-  GBChatRange * __range;
+  GBSharedRange * __range;
 
   BOOL __sorting_isset;
   BOOL __range_isset;
@@ -2750,11 +2384,11 @@
 
 #if TARGET_OS_IPHONE || (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5)
 @property (nonatomic, getter=sorting, setter=setSorting:) int sorting;
-@property (nonatomic, retain, getter=range, setter=setRange:) GBChatRange * range;
+@property (nonatomic, retain, getter=range, setter=setRange:) GBSharedRange * range;
 #endif
 
 - (id) init;
-- (id) initWithSorting: (int) sorting range: (GBChatRange *) range;
+- (id) initWithSorting: (int) sorting range: (GBSharedRange *) range;
 
 - (void) read: (id <TProtocol>) inProtocol;
 - (void) write: (id <TProtocol>) outProtocol;
@@ -2768,8 +2402,8 @@
 - (BOOL) sortingIsSet;
 
 #if !__has_feature(objc_arc)
-- (GBChatRange *) range;
-- (void) setRange: (GBChatRange *) range;
+- (GBSharedRange *) range;
+- (void) setRange: (GBSharedRange *) range;
 #endif
 - (BOOL) rangeIsSet;
 
@@ -2785,7 +2419,7 @@
   return self;
 }
 
-- (id) initWithSorting: (int) sorting range: (GBChatRange *) range
+- (id) initWithSorting: (int) sorting range: (GBSharedRange *) range
 {
   self = [super init];
   __sorting = sorting;
@@ -2846,11 +2480,11 @@
   __sorting_isset = NO;
 }
 
-- (GBChatRange *) range {
+- (GBSharedRange *) range {
   return [[__range retain_stub] autorelease_stub];
 }
 
-- (void) setRange: (GBChatRange *) range {
+- (void) setRange: (GBSharedRange *) range {
   [range retain_stub];
   [__range release_stub];
   __range = range;
@@ -2892,7 +2526,7 @@
         break;
       case 2:
         if (fieldType == TType_STRUCT) {
-          GBChatRange *fieldValue = [[GBChatRange alloc] init];
+          GBSharedRange *fieldValue = [[GBSharedRange alloc] init];
           [fieldValue read: inProtocol];
           [self setRange: fieldValue];
           [fieldValue release_stub];
@@ -2945,7 +2579,7 @@
 
 @interface GBChatChats_result : NSObject <TBase, NSCoding> {
   NSMutableArray * __success;
-  GBChatRequestError * __error;
+  GBSharedRequestError * __error;
 
   BOOL __success_isset;
   BOOL __error_isset;
@@ -2953,11 +2587,11 @@
 
 #if TARGET_OS_IPHONE || (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5)
 @property (nonatomic, retain, getter=success, setter=setSuccess:) NSMutableArray * success;
-@property (nonatomic, retain, getter=error, setter=setError:) GBChatRequestError * error;
+@property (nonatomic, retain, getter=error, setter=setError:) GBSharedRequestError * error;
 #endif
 
 - (id) init;
-- (id) initWithSuccess: (NSMutableArray *) success error: (GBChatRequestError *) error;
+- (id) initWithSuccess: (NSMutableArray *) success error: (GBSharedRequestError *) error;
 
 - (void) read: (id <TProtocol>) inProtocol;
 - (void) write: (id <TProtocol>) outProtocol;
@@ -2971,8 +2605,8 @@
 - (BOOL) successIsSet;
 
 #if !__has_feature(objc_arc)
-- (GBChatRequestError *) error;
-- (void) setError: (GBChatRequestError *) error;
+- (GBSharedRequestError *) error;
+- (void) setError: (GBSharedRequestError *) error;
 #endif
 - (BOOL) errorIsSet;
 
@@ -2988,7 +2622,7 @@
   return self;
 }
 
-- (id) initWithSuccess: (NSMutableArray *) success error: (GBChatRequestError *) error
+- (id) initWithSuccess: (NSMutableArray *) success error: (GBSharedRequestError *) error
 {
   self = [super init];
   __success = [success retain_stub];
@@ -3054,11 +2688,11 @@
   __success_isset = NO;
 }
 
-- (GBChatRequestError *) error {
+- (GBSharedRequestError *) error {
   return [[__error retain_stub] autorelease_stub];
 }
 
-- (void) setError: (GBChatRequestError *) error {
+- (void) setError: (GBSharedRequestError *) error {
   [error retain_stub];
   [__error release_stub];
   __error = error;
@@ -3112,7 +2746,7 @@
         break;
       case 1:
         if (fieldType == TType_STRUCT) {
-          GBChatRequestError *fieldValue = [[GBChatRequestError alloc] init];
+          GBSharedRequestError *fieldValue = [[GBSharedRequestError alloc] init];
           [fieldValue read: inProtocol];
           [self setError: fieldValue];
           [fieldValue release_stub];
@@ -3383,7 +3017,7 @@
 
 @interface GBChatChat_result : NSObject <TBase, NSCoding> {
   GBChatChat * __success;
-  GBChatRequestError * __error;
+  GBSharedRequestError * __error;
 
   BOOL __success_isset;
   BOOL __error_isset;
@@ -3391,11 +3025,11 @@
 
 #if TARGET_OS_IPHONE || (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5)
 @property (nonatomic, retain, getter=success, setter=setSuccess:) GBChatChat * success;
-@property (nonatomic, retain, getter=error, setter=setError:) GBChatRequestError * error;
+@property (nonatomic, retain, getter=error, setter=setError:) GBSharedRequestError * error;
 #endif
 
 - (id) init;
-- (id) initWithSuccess: (GBChatChat *) success error: (GBChatRequestError *) error;
+- (id) initWithSuccess: (GBChatChat *) success error: (GBSharedRequestError *) error;
 
 - (void) read: (id <TProtocol>) inProtocol;
 - (void) write: (id <TProtocol>) outProtocol;
@@ -3409,8 +3043,8 @@
 - (BOOL) successIsSet;
 
 #if !__has_feature(objc_arc)
-- (GBChatRequestError *) error;
-- (void) setError: (GBChatRequestError *) error;
+- (GBSharedRequestError *) error;
+- (void) setError: (GBSharedRequestError *) error;
 #endif
 - (BOOL) errorIsSet;
 
@@ -3426,7 +3060,7 @@
   return self;
 }
 
-- (id) initWithSuccess: (GBChatChat *) success error: (GBChatRequestError *) error
+- (id) initWithSuccess: (GBChatChat *) success error: (GBSharedRequestError *) error
 {
   self = [super init];
   __success = [success retain_stub];
@@ -3492,11 +3126,11 @@
   __success_isset = NO;
 }
 
-- (GBChatRequestError *) error {
+- (GBSharedRequestError *) error {
   return [[__error retain_stub] autorelease_stub];
 }
 
-- (void) setError: (GBChatRequestError *) error {
+- (void) setError: (GBSharedRequestError *) error {
   [error retain_stub];
   [__error release_stub];
   __error = error;
@@ -3540,7 +3174,7 @@
         break;
       case 1:
         if (fieldType == TType_STRUCT) {
-          GBChatRequestError *fieldValue = [[GBChatRequestError alloc] init];
+          GBSharedRequestError *fieldValue = [[GBSharedRequestError alloc] init];
           [fieldValue read: inProtocol];
           [self setError: fieldValue];
           [fieldValue release_stub];
@@ -3861,17 +3495,17 @@
 @end
 
 @interface GBChatNewMessage_result : NSObject <TBase, NSCoding> {
-  GBChatRequestError * __error;
+  GBSharedRequestError * __error;
 
   BOOL __error_isset;
 }
 
 #if TARGET_OS_IPHONE || (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5)
-@property (nonatomic, retain, getter=error, setter=setError:) GBChatRequestError * error;
+@property (nonatomic, retain, getter=error, setter=setError:) GBSharedRequestError * error;
 #endif
 
 - (id) init;
-- (id) initWithError: (GBChatRequestError *) error;
+- (id) initWithError: (GBSharedRequestError *) error;
 
 - (void) read: (id <TProtocol>) inProtocol;
 - (void) write: (id <TProtocol>) outProtocol;
@@ -3879,8 +3513,8 @@
 - (void) validate;
 
 #if !__has_feature(objc_arc)
-- (GBChatRequestError *) error;
-- (void) setError: (GBChatRequestError *) error;
+- (GBSharedRequestError *) error;
+- (void) setError: (GBSharedRequestError *) error;
 #endif
 - (BOOL) errorIsSet;
 
@@ -3896,7 +3530,7 @@
   return self;
 }
 
-- (id) initWithError: (GBChatRequestError *) error
+- (id) initWithError: (GBSharedRequestError *) error
 {
   self = [super init];
   __error = [error retain_stub];
@@ -3929,11 +3563,11 @@
   [super dealloc_stub];
 }
 
-- (GBChatRequestError *) error {
+- (GBSharedRequestError *) error {
   return [[__error retain_stub] autorelease_stub];
 }
 
-- (void) setError: (GBChatRequestError *) error {
+- (void) setError: (GBSharedRequestError *) error {
   [error retain_stub];
   [__error release_stub];
   __error = error;
@@ -3967,7 +3601,7 @@
     {
       case 1:
         if (fieldType == TType_STRUCT) {
-          GBChatRequestError *fieldValue = [[GBChatRequestError alloc] init];
+          GBSharedRequestError *fieldValue = [[GBSharedRequestError alloc] init];
           [fieldValue read: inProtocol];
           [self setError: fieldValue];
           [fieldValue release_stub];
@@ -4015,7 +3649,7 @@
 @interface GBChatmessages_args : NSObject <TBase, NSCoding> {
   NSString * __userId;
   NSString * __chatId;
-  GBChatRange * __range;
+  GBSharedRange * __range;
 
   BOOL __userId_isset;
   BOOL __chatId_isset;
@@ -4025,11 +3659,11 @@
 #if TARGET_OS_IPHONE || (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5)
 @property (nonatomic, retain, getter=userId, setter=setUserId:) NSString * userId;
 @property (nonatomic, retain, getter=chatId, setter=setChatId:) NSString * chatId;
-@property (nonatomic, retain, getter=range, setter=setRange:) GBChatRange * range;
+@property (nonatomic, retain, getter=range, setter=setRange:) GBSharedRange * range;
 #endif
 
 - (id) init;
-- (id) initWithUserId: (NSString *) userId chatId: (NSString *) chatId range: (GBChatRange *) range;
+- (id) initWithUserId: (NSString *) userId chatId: (NSString *) chatId range: (GBSharedRange *) range;
 
 - (void) read: (id <TProtocol>) inProtocol;
 - (void) write: (id <TProtocol>) outProtocol;
@@ -4049,8 +3683,8 @@
 - (BOOL) chatIdIsSet;
 
 #if !__has_feature(objc_arc)
-- (GBChatRange *) range;
-- (void) setRange: (GBChatRange *) range;
+- (GBSharedRange *) range;
+- (void) setRange: (GBSharedRange *) range;
 #endif
 - (BOOL) rangeIsSet;
 
@@ -4066,7 +3700,7 @@
   return self;
 }
 
-- (id) initWithUserId: (NSString *) userId chatId: (NSString *) chatId range: (GBChatRange *) range
+- (id) initWithUserId: (NSString *) userId chatId: (NSString *) chatId range: (GBSharedRange *) range
 {
   self = [super init];
   __userId = [userId retain_stub];
@@ -4165,11 +3799,11 @@
   __chatId_isset = NO;
 }
 
-- (GBChatRange *) range {
+- (GBSharedRange *) range {
   return [[__range retain_stub] autorelease_stub];
 }
 
-- (void) setRange: (GBChatRange *) range {
+- (void) setRange: (GBSharedRange *) range {
   [range retain_stub];
   [__range release_stub];
   __range = range;
@@ -4219,7 +3853,7 @@
         break;
       case 3:
         if (fieldType == TType_STRUCT) {
-          GBChatRange *fieldValue = [[GBChatRange alloc] init];
+          GBSharedRange *fieldValue = [[GBSharedRange alloc] init];
           [fieldValue read: inProtocol];
           [self setRange: fieldValue];
           [fieldValue release_stub];
@@ -4283,7 +3917,7 @@
 
 @interface GBChatMessages_result : NSObject <TBase, NSCoding> {
   NSMutableArray * __success;
-  GBChatRequestError * __error;
+  GBSharedRequestError * __error;
 
   BOOL __success_isset;
   BOOL __error_isset;
@@ -4291,11 +3925,11 @@
 
 #if TARGET_OS_IPHONE || (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5)
 @property (nonatomic, retain, getter=success, setter=setSuccess:) NSMutableArray * success;
-@property (nonatomic, retain, getter=error, setter=setError:) GBChatRequestError * error;
+@property (nonatomic, retain, getter=error, setter=setError:) GBSharedRequestError * error;
 #endif
 
 - (id) init;
-- (id) initWithSuccess: (NSMutableArray *) success error: (GBChatRequestError *) error;
+- (id) initWithSuccess: (NSMutableArray *) success error: (GBSharedRequestError *) error;
 
 - (void) read: (id <TProtocol>) inProtocol;
 - (void) write: (id <TProtocol>) outProtocol;
@@ -4309,8 +3943,8 @@
 - (BOOL) successIsSet;
 
 #if !__has_feature(objc_arc)
-- (GBChatRequestError *) error;
-- (void) setError: (GBChatRequestError *) error;
+- (GBSharedRequestError *) error;
+- (void) setError: (GBSharedRequestError *) error;
 #endif
 - (BOOL) errorIsSet;
 
@@ -4326,7 +3960,7 @@
   return self;
 }
 
-- (id) initWithSuccess: (NSMutableArray *) success error: (GBChatRequestError *) error
+- (id) initWithSuccess: (NSMutableArray *) success error: (GBSharedRequestError *) error
 {
   self = [super init];
   __success = [success retain_stub];
@@ -4392,11 +4026,11 @@
   __success_isset = NO;
 }
 
-- (GBChatRequestError *) error {
+- (GBSharedRequestError *) error {
   return [[__error retain_stub] autorelease_stub];
 }
 
-- (void) setError: (GBChatRequestError *) error {
+- (void) setError: (GBSharedRequestError *) error {
   [error retain_stub];
   [__error release_stub];
   __error = error;
@@ -4450,7 +4084,7 @@
         break;
       case 1:
         if (fieldType == TType_STRUCT) {
-          GBChatRequestError *fieldValue = [[GBChatRequestError alloc] init];
+          GBSharedRequestError *fieldValue = [[GBSharedRequestError alloc] init];
           [fieldValue read: inProtocol];
           [self setError: fieldValue];
           [fieldValue release_stub];
@@ -4782,7 +4416,7 @@
 
 @interface GBChatSetChatOptions_result : NSObject <TBase, NSCoding> {
   GBChatChat * __success;
-  GBChatRequestError * __error;
+  GBSharedRequestError * __error;
 
   BOOL __success_isset;
   BOOL __error_isset;
@@ -4790,11 +4424,11 @@
 
 #if TARGET_OS_IPHONE || (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5)
 @property (nonatomic, retain, getter=success, setter=setSuccess:) GBChatChat * success;
-@property (nonatomic, retain, getter=error, setter=setError:) GBChatRequestError * error;
+@property (nonatomic, retain, getter=error, setter=setError:) GBSharedRequestError * error;
 #endif
 
 - (id) init;
-- (id) initWithSuccess: (GBChatChat *) success error: (GBChatRequestError *) error;
+- (id) initWithSuccess: (GBChatChat *) success error: (GBSharedRequestError *) error;
 
 - (void) read: (id <TProtocol>) inProtocol;
 - (void) write: (id <TProtocol>) outProtocol;
@@ -4808,8 +4442,8 @@
 - (BOOL) successIsSet;
 
 #if !__has_feature(objc_arc)
-- (GBChatRequestError *) error;
-- (void) setError: (GBChatRequestError *) error;
+- (GBSharedRequestError *) error;
+- (void) setError: (GBSharedRequestError *) error;
 #endif
 - (BOOL) errorIsSet;
 
@@ -4825,7 +4459,7 @@
   return self;
 }
 
-- (id) initWithSuccess: (GBChatChat *) success error: (GBChatRequestError *) error
+- (id) initWithSuccess: (GBChatChat *) success error: (GBSharedRequestError *) error
 {
   self = [super init];
   __success = [success retain_stub];
@@ -4891,11 +4525,11 @@
   __success_isset = NO;
 }
 
-- (GBChatRequestError *) error {
+- (GBSharedRequestError *) error {
   return [[__error retain_stub] autorelease_stub];
 }
 
-- (void) setError: (GBChatRequestError *) error {
+- (void) setError: (GBSharedRequestError *) error {
   [error retain_stub];
   [__error release_stub];
   __error = error;
@@ -4939,7 +4573,7 @@
         break;
       case 1:
         if (fieldType == TType_STRUCT) {
-          GBChatRequestError *fieldValue = [[GBChatRequestError alloc] init];
+          GBSharedRequestError *fieldValue = [[GBSharedRequestError alloc] init];
           [fieldValue read: inProtocol];
           [self setError: fieldValue];
           [fieldValue release_stub];
@@ -5066,7 +4700,7 @@
 
 @interface GBChatGlobalUserCount_result : NSObject <TBase, NSCoding> {
   int32_t __success;
-  GBChatRequestError * __error;
+  GBSharedRequestError * __error;
 
   BOOL __success_isset;
   BOOL __error_isset;
@@ -5074,11 +4708,11 @@
 
 #if TARGET_OS_IPHONE || (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5)
 @property (nonatomic, getter=success, setter=setSuccess:) int32_t success;
-@property (nonatomic, retain, getter=error, setter=setError:) GBChatRequestError * error;
+@property (nonatomic, retain, getter=error, setter=setError:) GBSharedRequestError * error;
 #endif
 
 - (id) init;
-- (id) initWithSuccess: (int32_t) success error: (GBChatRequestError *) error;
+- (id) initWithSuccess: (int32_t) success error: (GBSharedRequestError *) error;
 
 - (void) read: (id <TProtocol>) inProtocol;
 - (void) write: (id <TProtocol>) outProtocol;
@@ -5092,8 +4726,8 @@
 - (BOOL) successIsSet;
 
 #if !__has_feature(objc_arc)
-- (GBChatRequestError *) error;
-- (void) setError: (GBChatRequestError *) error;
+- (GBSharedRequestError *) error;
+- (void) setError: (GBSharedRequestError *) error;
 #endif
 - (BOOL) errorIsSet;
 
@@ -5109,7 +4743,7 @@
   return self;
 }
 
-- (id) initWithSuccess: (int32_t) success error: (GBChatRequestError *) error
+- (id) initWithSuccess: (int32_t) success error: (GBSharedRequestError *) error
 {
   self = [super init];
   __success = success;
@@ -5170,11 +4804,11 @@
   __success_isset = NO;
 }
 
-- (GBChatRequestError *) error {
+- (GBSharedRequestError *) error {
   return [[__error retain_stub] autorelease_stub];
 }
 
-- (void) setError: (GBChatRequestError *) error {
+- (void) setError: (GBSharedRequestError *) error {
   [error retain_stub];
   [__error release_stub];
   __error = error;
@@ -5216,7 +4850,7 @@
         break;
       case 1:
         if (fieldType == TType_STRUCT) {
-          GBChatRequestError *fieldValue = [[GBChatRequestError alloc] init];
+          GBSharedRequestError *fieldValue = [[GBSharedRequestError alloc] init];
           [fieldValue read: inProtocol];
           [self setError: fieldValue];
           [fieldValue release_stub];
@@ -5432,7 +5066,7 @@
   return [self recv_newChat];
 }
 
-- (void) send_chats: (int) sorting range: (GBChatRange *) range
+- (void) send_chats: (int) sorting range: (GBSharedRange *) range
 {
   [outProtocol writeMessageBeginWithName: @"chats" type: TMessageType_CALL sequenceID: 0];
   [outProtocol writeStructBeginWithName: @"chats_args"];
@@ -5472,7 +5106,7 @@
                                            reason: @"chats failed: unknown result"];
 }
 
-- (NSMutableArray *) chats: (int) sorting range: (GBChatRange *) range
+- (NSMutableArray *) chats: (int) sorting range: (GBSharedRange *) range
 {
   [self send_chats : sorting range: range];
   return [self recv_chats];
@@ -5575,7 +5209,7 @@
   [self recv_newMessage];
 }
 
-- (void) send_messages: (NSString *) userId chatId: (NSString *) chatId range: (GBChatRange *) range
+- (void) send_messages: (NSString *) userId chatId: (NSString *) chatId range: (GBSharedRange *) range
 {
   [outProtocol writeMessageBeginWithName: @"messages" type: TMessageType_CALL sequenceID: 0];
   [outProtocol writeStructBeginWithName: @"messages_args"];
@@ -5622,7 +5256,7 @@
                                            reason: @"messages failed: unknown result"];
 }
 
-- (NSMutableArray *) messages: (NSString *) userId chatId: (NSString *) chatId range: (GBChatRange *) range
+- (NSMutableArray *) messages: (NSString *) userId chatId: (NSString *) chatId range: (GBSharedRange *) range
 {
   [self send_messages : userId chatId: chatId range: range];
   return [self recv_messages];

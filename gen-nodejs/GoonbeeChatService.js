@@ -4,12 +4,12 @@
 // DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
 //
 var Thrift = require('thrift').Thrift;
-var GoonbeeSharedThriftService_ttypes = require('./GoonbeeSharedThriftService_types')
+var GoonbeeShared_ttypes = require('./GoonbeeShared_types')
 
 
-var GoonbeeSharedThriftService = require('./GoonbeeSharedThriftService')
-var GoonbeeSharedThriftServiceClient = GoonbeeSharedThriftService.Client
-var GoonbeeSharedThriftServiceProcessor = GoonbeeSharedThriftService.Processor
+var BaseService = require('./BaseService')
+var BaseServiceClient = BaseService.Client
+var BaseServiceProcessor = BaseService.Processor
 var ttypes = require('./GoonbeeChatService_types');
 //HELPER FUNCTIONS AND STRUCTURES
 
@@ -69,7 +69,7 @@ GBChatService.GoonbeeChatService_isUsernameAvailable_args.prototype.write = func
 GBChatService.GoonbeeChatService_isUsernameAvailable_result = function(args) {
   this.success = null;
   this.error = null;
-  if (args instanceof ttypes.RequestError) {
+  if (args instanceof GoonbeeShared_ttypes.RequestError) {
     this.error = args;
     return;
   }
@@ -105,7 +105,7 @@ GBChatService.GoonbeeChatService_isUsernameAvailable_result.prototype.read = fun
       break;
       case 1:
       if (ftype == Thrift.Type.STRUCT) {
-        this.error = new ttypes.RequestError();
+        this.error = new GoonbeeShared_ttypes.RequestError();
         this.error.read(input);
       } else {
         input.skip(ftype);
@@ -206,7 +206,7 @@ GBChatService.GoonbeeChatService_registerUsername_args.prototype.write = functio
 GBChatService.GoonbeeChatService_registerUsername_result = function(args) {
   this.success = null;
   this.error = null;
-  if (args instanceof ttypes.RequestError) {
+  if (args instanceof GoonbeeShared_ttypes.RequestError) {
     this.error = args;
     return;
   }
@@ -242,7 +242,7 @@ GBChatService.GoonbeeChatService_registerUsername_result.prototype.read = functi
       break;
       case 1:
       if (ftype == Thrift.Type.STRUCT) {
-        this.error = new ttypes.RequestError();
+        this.error = new GoonbeeShared_ttypes.RequestError();
         this.error.read(input);
       } else {
         input.skip(ftype);
@@ -360,7 +360,7 @@ GBChatService.GoonbeeChatService_newChat_args.prototype.write = function(output)
 GBChatService.GoonbeeChatService_newChat_result = function(args) {
   this.success = null;
   this.error = null;
-  if (args instanceof ttypes.RequestError) {
+  if (args instanceof GoonbeeShared_ttypes.RequestError) {
     this.error = args;
     return;
   }
@@ -397,7 +397,7 @@ GBChatService.GoonbeeChatService_newChat_result.prototype.read = function(input)
       break;
       case 1:
       if (ftype == Thrift.Type.STRUCT) {
-        this.error = new ttypes.RequestError();
+        this.error = new GoonbeeShared_ttypes.RequestError();
         this.error.read(input);
       } else {
         input.skip(ftype);
@@ -464,7 +464,7 @@ GBChatService.GoonbeeChatService_chats_args.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.STRUCT) {
-        this.range = new ttypes.Range();
+        this.range = new GoonbeeShared_ttypes.Range();
         this.range.read(input);
       } else {
         input.skip(ftype);
@@ -499,7 +499,7 @@ GBChatService.GoonbeeChatService_chats_args.prototype.write = function(output) {
 GBChatService.GoonbeeChatService_chats_result = function(args) {
   this.success = null;
   this.error = null;
-  if (args instanceof ttypes.RequestError) {
+  if (args instanceof GoonbeeShared_ttypes.RequestError) {
     this.error = args;
     return;
   }
@@ -549,7 +549,7 @@ GBChatService.GoonbeeChatService_chats_result.prototype.read = function(input) {
       break;
       case 1:
       if (ftype == Thrift.Type.STRUCT) {
-        this.error = new ttypes.RequestError();
+        this.error = new GoonbeeShared_ttypes.RequestError();
         this.error.read(input);
       } else {
         input.skip(ftype);
@@ -659,7 +659,7 @@ GBChatService.GoonbeeChatService_chat_args.prototype.write = function(output) {
 GBChatService.GoonbeeChatService_chat_result = function(args) {
   this.success = null;
   this.error = null;
-  if (args instanceof ttypes.RequestError) {
+  if (args instanceof GoonbeeShared_ttypes.RequestError) {
     this.error = args;
     return;
   }
@@ -696,7 +696,7 @@ GBChatService.GoonbeeChatService_chat_result.prototype.read = function(input) {
       break;
       case 1:
       if (ftype == Thrift.Type.STRUCT) {
-        this.error = new ttypes.RequestError();
+        this.error = new GoonbeeShared_ttypes.RequestError();
         this.error.read(input);
       } else {
         input.skip(ftype);
@@ -812,7 +812,7 @@ GBChatService.GoonbeeChatService_newMessage_args.prototype.write = function(outp
 
 GBChatService.GoonbeeChatService_newMessage_result = function(args) {
   this.error = null;
-  if (args instanceof ttypes.RequestError) {
+  if (args instanceof GoonbeeShared_ttypes.RequestError) {
     this.error = args;
     return;
   }
@@ -838,7 +838,7 @@ GBChatService.GoonbeeChatService_newMessage_result.prototype.read = function(inp
     {
       case 1:
       if (ftype == Thrift.Type.STRUCT) {
-        this.error = new ttypes.RequestError();
+        this.error = new GoonbeeShared_ttypes.RequestError();
         this.error.read(input);
       } else {
         input.skip(ftype);
@@ -914,7 +914,7 @@ GBChatService.GoonbeeChatService_messages_args.prototype.read = function(input) 
       break;
       case 3:
       if (ftype == Thrift.Type.STRUCT) {
-        this.range = new ttypes.Range();
+        this.range = new GoonbeeShared_ttypes.Range();
         this.range.read(input);
       } else {
         input.skip(ftype);
@@ -954,7 +954,7 @@ GBChatService.GoonbeeChatService_messages_args.prototype.write = function(output
 GBChatService.GoonbeeChatService_messages_result = function(args) {
   this.success = null;
   this.error = null;
-  if (args instanceof ttypes.RequestError) {
+  if (args instanceof GoonbeeShared_ttypes.RequestError) {
     this.error = args;
     return;
   }
@@ -1004,7 +1004,7 @@ GBChatService.GoonbeeChatService_messages_result.prototype.read = function(input
       break;
       case 1:
       if (ftype == Thrift.Type.STRUCT) {
-        this.error = new ttypes.RequestError();
+        this.error = new GoonbeeShared_ttypes.RequestError();
         this.error.read(input);
       } else {
         input.skip(ftype);
@@ -1131,7 +1131,7 @@ GBChatService.GoonbeeChatService_setChatOptions_args.prototype.write = function(
 GBChatService.GoonbeeChatService_setChatOptions_result = function(args) {
   this.success = null;
   this.error = null;
-  if (args instanceof ttypes.RequestError) {
+  if (args instanceof GoonbeeShared_ttypes.RequestError) {
     this.error = args;
     return;
   }
@@ -1168,7 +1168,7 @@ GBChatService.GoonbeeChatService_setChatOptions_result.prototype.read = function
       break;
       case 1:
       if (ftype == Thrift.Type.STRUCT) {
-        this.error = new ttypes.RequestError();
+        this.error = new GoonbeeShared_ttypes.RequestError();
         this.error.read(input);
       } else {
         input.skip(ftype);
@@ -1231,7 +1231,7 @@ GBChatService.GoonbeeChatService_globalUserCount_args.prototype.write = function
 GBChatService.GoonbeeChatService_globalUserCount_result = function(args) {
   this.success = null;
   this.error = null;
-  if (args instanceof ttypes.RequestError) {
+  if (args instanceof GoonbeeShared_ttypes.RequestError) {
     this.error = args;
     return;
   }
@@ -1267,7 +1267,7 @@ GBChatService.GoonbeeChatService_globalUserCount_result.prototype.read = functio
       break;
       case 1:
       if (ftype == Thrift.Type.STRUCT) {
-        this.error = new ttypes.RequestError();
+        this.error = new GoonbeeShared_ttypes.RequestError();
         this.error.read(input);
       } else {
         input.skip(ftype);
@@ -1305,7 +1305,7 @@ GBChatService.GoonbeeChatServiceClient = exports.Client = function(output, pClas
     this.seqid = 0;
     this._reqs = {};
 };
-Thrift.inherits(GBChatService.GoonbeeChatServiceClient, GoonbeeSharedThriftServiceClient)
+Thrift.inherits(GBChatService.GoonbeeChatServiceClient, BaseServiceClient)
 GBChatService.GoonbeeChatServiceClient.prototype.isUsernameAvailable = function(username, callback) {
   this.seqid += 1;
   this._reqs[this.seqid] = callback;
@@ -1649,7 +1649,7 @@ GBChatService.GoonbeeChatServiceClient.prototype.recv_globalUserCount = function
 GBChatService.GoonbeeChatServiceProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
-Thrift.inherits(GBChatService.GoonbeeChatServiceProcessor, GoonbeeSharedThriftServiceProcessor)
+Thrift.inherits(GBChatService.GoonbeeChatServiceProcessor, BaseServiceProcessor)
 GBChatService.GoonbeeChatServiceProcessor.prototype.process = function(input, output) {
   var r = input.readMessageBegin();
   if (this['process_' + r.fname]) {
